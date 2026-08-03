@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900">
+  <rect width="1400" height="900" fill="#f8ebdc"/>
+  <rect x="70" y="80" width="1260" height="740" rx="36" fill="#fff8ef" stroke="#b16a3f" stroke-width="4"/>
+  <path d="M150 700c96-162 238-191 362-127 76 39 121 122 233 119 94-2 184-71 276-195" fill="none" stroke="#d8aa7a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M250 620c42-70 111-114 198-114 100 0 153 52 244 52 93 0 146-54 214-145" fill="none" stroke="#8d6b4b" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="1085" cy="250" r="90" fill="#f1c28a" opacity="0.9"/>
+  <circle cx="310" cy="260" r="70" fill="#f2d8b2" opacity="0.8"/>
+  <text x="700" y="395" text-anchor="middle" font-family="Segoe Script, Brush Script MT, cursive" font-size="120" fill="#7c4c2b">Appreciation</text>
+  <text x="700" y="470" text-anchor="middle" font-family="Segoe Print, Comic Sans MS, cursive" font-size="38" fill="#8a5c34">for the memories we made together</text>
+</svg>
