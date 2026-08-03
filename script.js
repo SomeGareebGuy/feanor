@@ -5,16 +5,37 @@ document.addEventListener('DOMContentLoaded', () => {
   let locked = false;
   let startY = 0;
 
-  function animateSection(index) {
-    sections.forEach((section) => section.classList.remove('is-entering'));
+  function animateSection(index, previousIndex) {
+    sections.forEach((section) => {
+      section.classList.remove('is-entering', 'is-leaving', 'from-next', 'from-prev');
+      section.classList.remove('active');
+    });
+
     const targetSection = sections[index];
+    const previousSection = previousIndex !== null ? sections[previousIndex] : null;
+
     if (!targetSection) {
       return;
     }
 
-    targetSection.classList.remove('is-entering');
-    void targetSection.offsetWidth;
-    targetSection.classList.add('is-entering');
+    if (previousSection && previousSection !== targetSection) {
+      previousSection.classList.add('is-leaving');
+      previousSection.classList.toggle('from-next', index > previousIndex);
+      previousSection.classList.toggle('from-prev', index < previousIndex);
+    }
+
+    targetSection.classList.add('active', 'is-entering');
+    targetSection.classList.toggle('from-next', index > previousIndex);
+    targetSection.classList.toggle('from-prev', index < previousIndex);
+
+    window.setTimeout(() => {
+      sections.forEach((section) => {
+        section.classList.remove('is-entering', 'is-leaving', 'from-next', 'from-prev');
+      });
+      sections.forEach((section, sectionIndex) => {
+        section.classList.toggle('active', sectionIndex === index);
+      });
+    }, 450);
   }
 
   function goToSection(index) {
@@ -22,10 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const previousIndex = current;
     current = index;
-    window.scrollTo({ top: current * window.innerHeight, behavior: 'auto' });
-    window.scrollTo(0, current * window.innerHeight);
-    animateSection(current);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    animateSection(current, previousIndex);
   }
 
   function changeSection(direction) {
