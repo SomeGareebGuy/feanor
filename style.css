@@ -42,7 +42,9 @@ body {
 }
 
 .section.is-entering .section-card,
-.section.is-entering .hero-copy-wrap {
+.section.is-entering .hero-copy-wrap,
+.section.is-entering .content-card,
+.section.is-entering .photo-card {
   animation: swipeUpIn 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -137,6 +139,124 @@ h2 {
   background: linear-gradient(180deg, rgba(255, 250, 244, 0.7), rgba(246, 202, 178, 0.18));
 }
 
+.riddle-section {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255, 250, 244, 0.8), rgba(246, 202, 178, 0.22));
+}
+
+.section-frame {
+  width: min(1100px, 100%);
+  min-height: min(72vh, 620px);
+  display: grid;
+  gap: 1rem;
+  align-items: stretch;
+  transition: filter 240ms ease, opacity 240ms ease;
+}
+
+.photo-side,
+.content-side {
+  display: flex;
+}
+
+.photo-card,
+.content-card,
+.lock-card {
+  width: 100%;
+  border-radius: 28px;
+  border: 1px solid rgba(177, 106, 63, 0.16);
+  box-shadow: 0 16px 40px rgba(91, 60, 39, 0.12);
+  background: rgba(255, 253, 248, 0.95);
+}
+
+.photo-card {
+  min-height: 100%;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, rgba(255, 247, 239, 0.95), rgba(246, 202, 178, 0.4));
+}
+
+.content-card {
+  padding: 1.6rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.caption-block {
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(246, 202, 178, 0.18);
+  border: 1px solid rgba(177, 106, 63, 0.12);
+}
+
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(255, 248, 240, 0.25);
+  backdrop-filter: blur(6px);
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 220ms ease;
+}
+
+.lock-card {
+  width: min(520px, 100%);
+  padding: 1.6rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.answer-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.answer-input {
+  flex: 1 1 220px;
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(177, 106, 63, 0.24);
+  background: rgba(255, 253, 248, 0.96);
+  color: var(--ink);
+}
+
+.answer-button {
+  padding: 0.8rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+}
+
+.feedback {
+  min-height: 1.2rem;
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.riddle-section.locked .section-frame {
+  filter: blur(12px);
+  opacity: 0.8;
+}
+
+.riddle-section.unlocked .lock-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.riddle-section.unlocked .caption-block {
+  display: block;
+}
+
 .stop-list {
   display: grid;
   gap: 1rem;
@@ -174,6 +294,15 @@ h2 {
 
   .section-card {
     padding: 1.2rem;
+  }
+
+  .section-frame {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-side,
+  .content-side {
+    min-height: 220px;
   }
 }
 

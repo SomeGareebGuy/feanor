@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const sections = Array.from(document.querySelectorAll('.section'));
+  const riddleSections = Array.from(document.querySelectorAll('.riddle-section'));
   let current = 0;
   let locked = false;
   let startY = 0;
@@ -44,6 +45,37 @@ document.addEventListener('DOMContentLoaded', () => {
       locked = false;
     }, 250);
   }
+
+  function normalizeAnswer(value) {
+    return value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
+  riddleSections.forEach((section) => {
+    const form = section.querySelector('.answer-form');
+    const input = section.querySelector('.answer-input');
+    const feedback = section.querySelector('.feedback');
+
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const expected = section.getAttribute('data-answer') || '';
+      const currentAnswer = normalizeAnswer(input?.value || '');
+
+      if (normalizeAnswer(expected) === currentAnswer) {
+        section.classList.remove('locked');
+        section.classList.add('unlocked');
+        feedback.textContent = 'Unlocked.';
+        input.value = '';
+      } else {
+        feedback.textContent = 'Not quite — try again.';
+      }
+    });
+
+    input?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        form?.requestSubmit();
+      }
+    });
+  });
 
   document.getElementById('start-journey')?.addEventListener('click', (event) => {
     event.preventDefault();
