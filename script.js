@@ -1,9 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
   const sections = Array.from(document.querySelectorAll('.section'));
   const riddleSections = Array.from(document.querySelectorAll('.riddle-section'));
+  const collagePhotos = Array.from(document.querySelectorAll('.collage-photo'));
+  const unlockedState = Array(collagePhotos.length).fill(false);
   let current = 0;
   let locked = false;
   let startY = 0;
+
+  function updateCollage() {
+    collagePhotos.forEach((photo, index) => {
+      const isUnlocked = unlockedState[index];
+      photo.classList.toggle('locked', !isUnlocked);
+      photo.classList.toggle('is-revealed', isUnlocked);
+
+      const placeholder = photo.querySelector('.slot-placeholder');
+      const image = photo.querySelector('img');
+
+      if (placeholder) {
+        placeholder.style.display = isUnlocked ? 'none' : 'flex';
+      }
+
+      if (image) {
+        image.style.display = isUnlocked ? 'block' : 'none';
+      }
+    });
+  }
+
+  function unlockPhoto(index) {
+    if (index < 0 || index >= unlockedState.length || unlockedState[index]) {
+      return;
+    }
+
+    unlockedState[index] = true;
+    updateCollage();
+  }
 
   function animateSection(index, previousIndex) {
     sections.forEach((section) => {
@@ -86,6 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
         section.classList.add('unlocked');
         feedback.textContent = 'Unlocked.';
         input.value = '';
+
+        const photoIndex = Number(section.id.replace('riddle-', '')) - 1;
+        unlockPhoto(photoIndex);
       } else {
         feedback.textContent = 'Not quite — try again.';
       }
@@ -133,5 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
     goToSection(current);
   });
 
+  riddleSections.forEach((section, index) => {
+    if (section.classList.contains('unlocked')) {
+      unlockPhoto(index);
+    }
+  });
+
+  updateCollage();
   goToSection(0);
 });
